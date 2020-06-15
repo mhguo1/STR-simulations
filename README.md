@@ -5,7 +5,9 @@
 STR_read_simulator.py allows you to generate fake NGS reads around a given STR, which can facilitate downstream optimization of alignment and STR genotyping. This code will make a "pseudo" reference genome with variable STR lengths and then simulate a user specified number of reads.
 
 #Required options:
+
 --chr: chromosome of STR. Can be in ucsc format beginning with "chr" or GRCh without the "chr". However, this must match the convention used in the reference genome specified
+
 --strstart: The start coordinate of your STR of interest. It is provided in -1 bed coordinates
 --strend: The end coordinate of your STR of interest.
 --nucleotide: The repeat nucleotides for your STR. An example is --nucleotide CAG
