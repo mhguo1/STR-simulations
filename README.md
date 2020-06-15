@@ -1,6 +1,7 @@
 # STR-simulations
 
 **Simulation of STR reads**
+
 STR_read_simulator.py allows you to generate fake NGS reads around a given STR, which can facilitate downstream optimization of alignment and STR genotyping. This code will make a "pseudo" reference genome with variable STR lengths and then simulate a user specified number of reads.
 
 #Required options:
@@ -10,20 +11,31 @@ STR_read_simulator.py allows you to generate fake NGS reads around a given STR, 
 --nucleotide: The repeat nucleotides for your STR. An example is --nucleotide CAG
 --genotype: The genotypes of the STR you'd like to simulate. If you have a haploid genome (e.g., with X chromosome), then you can just provide a single number (e.g., 15). If you have a diploid genome, you can provide comma separated values (e.g., 15,30). If you have a diploid genome but would like to simulate a homozygous genotype, you can provide a single number or a comma separated number (i.e., 15 and 15,15 are treated equivalently)
 --ref: This is the hard path to your reference genome. It should be a gzipped fasta file. All chromosomes can be present in the ref file. The current default is /project/jcreminslab/guomic_projects/ref/genomes/hg38.fa.gz
---out: This is the prefix for your output. output will be written to the current directory. If paired end is specified, then output files will be ${out}_
+--out: This is the prefix for your output. output will be written to the current directory. If paired end is specified, then output files will be ${out}_1.fastq.gz and ${out}_2.fastq.gz. If single end is specified, then output file will be ${out}.fastq.gz. Default is "temp"
 
 #Additional options
 --stutter: This allows you to simulate stutter in your STR genotypes. The value provided is the standard deviation of your STR genotypes in repeat units. Default is 0.1.
+--window: A window upstream and downstream of the STR to simulate. For example, if 10000 is provided, the code will simulate reads for 10kb upstream and 10kb downstream of the STR. A value of at least 1000 should be provided. Default is 10000.
+--coverage: Coverage of the region to simulate. A value of 10 would simulate approximately 10x coverage. Default is 10
+--numreads: Number of reads to simulate. This is only used if --coverage is not provided
+--insertmean: Mean distance between read pairs for PE reads. Only used if --pairedend mode is specified. Default is 500.
+--insertstdev: Mean distance between read pairs for PE reads. Only used if --pairedend mode is specified. Default is 100.
+--pairedend: Specifies usage of paired end mode
+--readlen: Specifies length of reads. Default is 150 bp.
 
-
-
-parser.add_option("--stutter", action="store", dest="stutter", default=0.1) #stutter, as expressed in SD of # of repeats
-parser.add_option("--ref", action="store", dest="ref", default="/project/jcreminslab/guomic_projects/ref/genomes/hg38.fa.gz")
-parser.add_option("--out", action="store",dest="outprefix", default="temp") #output file
-parser.add_option("--window", action="store", dest="window", default=10000) #Window around STR to simulate
-parser.add_option("--coverage", action="store", dest="coverage") #X coverage
-parser.add_option("--numreads", action="store", dest="numreads", default=10000) # of reads to simulate. Used only if cov is not provided
-parser.add_option("--insertmean", action="store", dest="insertmean", default=500) # insert mean. Used only if PE
-parser.add_option("--insertstdev", action="store", dest="insertstdev", default=100) #st dev of insert length. Used only if PE
-parser.add_option("--pairedend", action="store_true", dest="pairedend") #Paired end
-parser.add_option("--readlen", action="store", dest="readlen", default=150) #length of reads
+**An example**
+Here, we will simulate reads around HTT CAG expansion. STR repeat lengths of 19 and 50 will be simulated. Paired end mode with 150 bp PE reads are used. Simulations will be done to 10x coverage. 
+python STR_read_simulator.py \
+--chr chr4 \
+--strstart 3074877 \
+--strend 3074933 \
+--nucleotide CAG \
+--genotype 19,50 \
+--stutter 0.2 \
+--out test \
+--window 10000 \
+--coverage 10 \
+--insertmean 500 \
+--insertstdev 120 \
+--pairedend \
+--readlen 150 
