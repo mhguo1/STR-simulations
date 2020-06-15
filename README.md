@@ -23,7 +23,8 @@ STR_read_simulator.py allows you to generate fake NGS reads around a given STR, 
 7) --pairedend: Specifies usage of paired end mode
 8) --readlen: Specifies length of reads. Default is 150 bp.
 
-**An example**
+#An example
+
 Here, we will simulate reads around HTT CAG expansion. STR repeat lengths of 19 and 50 will be simulated. Paired end mode with 150 bp PE reads are used. Simulations will be done to 10x coverage. 
 
 python STR_read_simulator.py --chr chr4 --strstart 3074877 --strend 3074933 --nucleotide CAG --genotype 19,50 --stutter 0.2 --out test --window 10000 --coverage 10 --insertmean 500 --insertstdev 120 --pairedend --readlen 150 
