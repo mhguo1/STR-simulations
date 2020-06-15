@@ -15,12 +15,11 @@ parser.add_option("--strstart", action="store",dest="strstart") #start coordinat
 parser.add_option("--strend", action="store",dest="strend") #end coordinate of STR in bed format
 parser.add_option("--nucleotide", action="store", dest="nucleotide") #repeat letters
 parser.add_option("--genotype", action="store", dest="genotype") #genotypes
-
+parser.add_option("--ref", action="store", dest="ref", default="/project/jcreminslab/guomic_projects/ref/genomes/hg38.fa.gz")
+parser.add_option("--out", action="store",dest="outprefix", default="temp") #output file
 
 #Optional
 parser.add_option("--stutter", action="store", dest="stutter", default=0.1) #stutter, as expressed in SD of # of repeats
-parser.add_option("--ref", action="store", dest="ref", default="/project/jcreminslab/guomic_projects/ref/genomes/hg38.fa.gz")
-parser.add_option("--out", action="store",dest="outprefix", default="temp") #output file
 parser.add_option("--window", action="store", dest="window", default=10000) #Window around STR to simulate
 parser.add_option("--coverage", action="store", dest="coverage") #X coverage
 parser.add_option("--numreads", action="store", dest="numreads", default=10000) # of reads to simulate. Used only if cov is not provided
