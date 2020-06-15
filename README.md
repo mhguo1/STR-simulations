@@ -1,6 +1,6 @@
 # STR-simulations
 
-#Simulation of STR reads
+**Simulation of STR reads**
 STR_read_simulator.py allows you to generate fake NGS reads around a given STR, which can facilitate downstream optimization of alignment and STR genotyping. This code will make a "pseudo" reference genome with variable STR lengths and then simulate a user specified number of reads.
 
 #Required options:
@@ -9,8 +9,12 @@ STR_read_simulator.py allows you to generate fake NGS reads around a given STR, 
 --strend: The end coordinate of your STR of interest.
 --nucleotide: The repeat nucleotides for your STR. An example is --nucleotide CAG
 --genotype: The genotypes of the STR you'd like to simulate. If you have a haploid genome (e.g., with X chromosome), then you can just provide a single number (e.g., 15). If you have a diploid genome, you can provide comma separated values (e.g., 15,30). If you have a diploid genome but would like to simulate a homozygous genotype, you can provide a single number or a comma separated number (i.e., 15 and 15,15 are treated equivalently)
+--ref: This is the hard path to your reference genome. It should be a gzipped fasta file. All chromosomes can be present in the ref file. The current default is /project/jcreminslab/guomic_projects/ref/genomes/hg38.fa.gz
+--out: This is the prefix for your output. output will be written to the current directory. If paired end is specified, then output files will be ${out}_
 
 #Additional options
+--stutter: This allows you to simulate stutter in your STR genotypes. The value provided is the standard deviation of your STR genotypes in repeat units. Default is 0.1.
+
 
 
 parser.add_option("--stutter", action="store", dest="stutter", default=0.1) #stutter, as expressed in SD of # of repeats
